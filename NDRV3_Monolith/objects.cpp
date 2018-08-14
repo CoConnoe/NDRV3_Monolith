@@ -1,6 +1,6 @@
-#include <objects.h>
-#include <vector>
 #include "stdafx.h"
+#include <vector>
+#include "objects.h"
 
 Object_t createObject(ObjectType_t type, int rows, int cols, const std::vector<bool>& poslist)
 {

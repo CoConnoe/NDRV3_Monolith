@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{89803B0B-6E10-49D7-97A6-408ACDBC2D3E}</ProjectGuid>
+    <ProjectGuid>{4A480442-9327-4EE6-BEF1-75AC31285D1C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NDRV3Monolith</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
@@ -75,6 +75,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -147,13 +148,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src/stdafx.h" />
-    <ClInclude Include="src/targetver.h" />
+    <ClInclude Include="board.h" />
+    <ClInclude Include="objects.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src/board.cpp" />
-    <ClCompile Include="src/objects.cpp" />
-    <ClCompile Include="src/stdafx.cpp">
+    <ClCompile Include="board.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="objects.cpp" />
+    <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

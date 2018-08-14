@@ -1,5 +1,5 @@
-#include "board.h"
 #include "stdafx.h"
+#include "board.h"
 
 Board_t::Board_t(int maxrows, int maxcols)
 	: m_rows(maxrows), m_cols(maxcols)
@@ -80,6 +80,11 @@ std::vector<Region_t> Board_t::getAllRegions() const
 	}
 
 	return rval;
+}
+
+Region_t Board_t::getRegionAt(int row, int col) const
+{
+	return Region_t();
 }
 
 
