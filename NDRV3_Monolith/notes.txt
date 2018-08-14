@@ -1,0 +1,37 @@
+11 rows
+22 cols
+
+2 monokids = 1000pts
+7 fish = 500pts
+blocks = 5pt / block
+4700 pts for S rank
+
+MM		MMMM
+MM		MMMM
+MM
+MM
+
+MM		MMMM	MMM		 MMM
+MMM		MMMM	MMM		MMMM
+MMM		MMM		MMM		MMMM
+MMM				MM
+
+MMM		MMM
+MMMM	MMMM
+MMMM	MMMM
+ MMM	MMM
+
+FF		FFFF
+FF		FFFF
+FF
+FF
+
+FF  	  FF
+FFF		FFF
+ FFF	FFF	
+  FF	FF
+
+FF		  FF	F		 FFF
+FFF		 FFF	FF		FFF
+ FF		FFF		FFF		FF
+  F				 FF
