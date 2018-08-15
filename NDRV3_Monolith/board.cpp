@@ -208,13 +208,15 @@ int Board_t::getIndex(int row, int col) const
 	return row * m_cols + col;
 }
 
-void Board_t::breakRegion(Region_t region)
+bool Board_t::breakRegion(Region_t region)
 {
 	if (region.m_coords.size() == 0 || !(region.m_type == TILE_WHITE || region.m_type == TILE_PINK || region.m_type == TILE_ORANGE || region.m_type == TILE_BLUE)) {
 		std::cout << "ERROR: Invalid region!" << std::endl;
+		return false;
 	}
 	else if (region.m_coords.size() == 1) {
 		std::cout << "ERROR: Cannot break single blocks!" << std::endl;
+		return false;
 	}
 	else {
 		Region_t border = getBorder(region);
@@ -241,13 +243,15 @@ void Board_t::breakRegion(Region_t region)
 				break;
 			}
 		}
+
+		return true;
 	}
 }
 
-void Board_t::breakRegionAt(int row, int col)
+bool Board_t::breakRegionAt(int row, int col)
 {
 	Region_t region = getRegionAt(row, col);
-	breakRegion(region);
+	return breakRegion(region);
 }
 
 void Board_t::print()

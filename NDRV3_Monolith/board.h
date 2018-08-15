@@ -42,8 +42,8 @@ public:
 	int getCol(int index) const;
 	int getIndex(int row, int col) const;
 
-	void breakRegion(Region_t region);
-	void breakRegionAt(int row, int col);
+	bool breakRegion(Region_t region);
+	bool breakRegionAt(int row, int col);
 
 	std::vector<ObjectLoc_t> possibleMonokubLocs(Region_t region) const;
 	std::vector<ObjectLoc_t> possibleHiddenMonokubLocs() const;
