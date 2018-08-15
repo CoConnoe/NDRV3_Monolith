@@ -53,6 +53,8 @@ public:
 
 	void modify(int row, int col, Tile_t newType);
 
+	void print();
+
 private:
 	std::vector<Tile_t> m_array;
 	int m_rows;
