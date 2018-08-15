@@ -42,4 +42,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="notes.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="test.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="todo.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

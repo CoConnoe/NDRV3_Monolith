@@ -54,24 +54,24 @@ std::vector<Object_t> getAllFishies()
 	// FF
 	// FF
 	// FF ...and rotated
-	g_fishies.push_back(createObject(MONOKUB, 4, 2, { 1, 1, 1, 1, 1, 1, 1, 1 }));
-	g_fishies.push_back(createObject(MONOKUB, 2, 4, { 1, 1, 1, 1, 1, 1, 1, 1 }));
+	g_fishies.push_back(createObject(FISHIE, 4, 2, { 1, 1, 1, 1, 1, 1, 1, 1 }));
+	g_fishies.push_back(createObject(FISHIE, 2, 4, { 1, 1, 1, 1, 1, 1, 1, 1 }));
 
 	// FF
 	// FFF
 	//  FFF
 	//   FF ...and rotated
-	g_fishies.push_back(createObject(MONOKUB, 4, 4, { 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1 }));
-	g_fishies.push_back(createObject(MONOKUB, 4, 4, { 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0 }));
+	g_fishies.push_back(createObject(FISHIE, 4, 4, { 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1 }));
+	g_fishies.push_back(createObject(FISHIE, 4, 4, { 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0 }));
 
 	// FF
 	// FFF
 	//  FF
 	//   F ...and rotated
-	g_fishies.push_back(createObject(MONOKUB, 4, 3, { 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1 }));
-	g_fishies.push_back(createObject(MONOKUB, 3, 4, { 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 }));
-	g_fishies.push_back(createObject(MONOKUB, 4, 3, { 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1 }));
-	g_fishies.push_back(createObject(MONOKUB, 3, 4, { 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0 }));
+	g_fishies.push_back(createObject(FISHIE, 4, 3, { 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1 }));
+	g_fishies.push_back(createObject(FISHIE, 3, 4, { 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 }));
+	g_fishies.push_back(createObject(FISHIE, 4, 3, { 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1 }));
+	g_fishies.push_back(createObject(FISHIE, 3, 4, { 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0 }));
 
 	return g_fishies;
 }
