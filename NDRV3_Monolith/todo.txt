@@ -1,5 +1,3 @@
-- break (and recommended break) tell you the coords of all broken blocks
-- initialize input function
 - test: https://www.youtube.com/watch?v=ImVLv3YEd7Y
 - determine if placement of fully hidden objects is helpful or not
 - mess around with the MAX_DEPTH MAX_TRIALS variables a bit in release mode with a fullsize grid

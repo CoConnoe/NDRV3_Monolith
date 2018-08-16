@@ -39,6 +39,37 @@ void breakRecommendedCommaned(Board_t& board, std::stack<Board_t>& boardHistory,
 	std::cout << std::endl;
 }
 
+Tile_t charToTile(char c) {
+	switch (c) {
+	case '0':
+		return TILE_EMPTY;
+		break;
+	case '1':
+		return TILE_WHITE;
+		break;
+	case '2':
+		return TILE_PINK;
+		break;
+	case '3':
+		return TILE_ORANGE;
+		break;
+	case '4':
+		return TILE_BLUE;
+		break;
+	case 'M':
+	case 'm':
+		return TILE_MONOKUB;
+		break;
+	case 'F':
+	case 'f':
+		return TILE_FISHIE;
+		break;
+	default:
+		return NOT_TILE_OOB;
+		break;
+	}
+}
+
 void modifyCommand(Board_t& board, std::stack<Board_t>& boardHistory, Region_t& bestRegion) {
 	//std::cout << "Row: ";
 	int row;
@@ -53,35 +84,7 @@ void modifyCommand(Board_t& board, std::stack<Board_t>& boardHistory, Region_t& 
 	char val;
 	std::cin >> val;
 
-	Tile_t valtype;
-	switch (val) {
-	case '0':
-		valtype = TILE_EMPTY;
-		break;
-	case '1':
-		valtype = TILE_WHITE;
-		break;
-	case '2':
-		valtype = TILE_PINK;
-		break;
-	case '3':
-		valtype = TILE_ORANGE;
-		break;
-	case '4':
-		valtype = TILE_BLUE;
-		break;
-	case 'M':
-	case 'm':
-		valtype = TILE_MONOKUB;
-		break;
-	case 'F':
-	case 'f':
-		valtype = TILE_FISHIE;
-		break;
-	default:
-		valtype = NOT_TILE_OOB;
-		break;
-	}
+	Tile_t valtype = charToTile(val);
 
 	if (valtype == NOT_TILE_OOB) {
 		std::cout << "ERROR: Invalid tile type" << std::endl;
@@ -97,6 +100,39 @@ void modifyCommand(Board_t& board, std::stack<Board_t>& boardHistory, Region_t& 
 	}
 
 	std::cout << std::endl;
+}
+
+void initCommand(Board_t& board, std::stack<Board_t>& boardHistory, Region_t& bestRegion) {
+	int rowcnt, colcnt;
+	std::cin >> rowcnt >> colcnt;
+
+	if (rowcnt > 0 && colcnt > 0) {
+		Board_t newBoard(rowcnt, colcnt);
+
+		for (int r = 0; r < rowcnt; ++r) {
+			for (int c = 0; c < colcnt; ++c) {
+				char val;
+				std::cin >> val;
+
+				Tile_t valtype = charToTile(val);
+
+				if (valtype == NOT_TILE_OOB) {
+					std::cout << "ERROR: Invalid tile type" << std::endl;
+					return;
+				}
+				else {
+					newBoard.modify(r, c, valtype);
+					newBoard.print(Region_t());
+				}
+			}
+		}
+
+		std::cout << "Initialized!" << std::endl << std::endl;
+
+		boardHistory.push(board);
+		board = newBoard;
+		bestRegion = Region_t();
+	}
 }
 
 void undoCommand(Board_t& board, std::stack<Board_t>& boardHistory, Region_t& bestRegion) {
@@ -133,7 +169,7 @@ int main() {
 			std::cout << "SOLVED" << std::endl;
 			return 0;
 		}
-		std::cout << "[B]reak [C]alc [R]ecommended [M]odify [U]ndo [Q]uit" << std::endl;
+		std::cout << "[B]reak [C]alc [R]ecommended [M]odify [I]nit [U]ndo [Q]uit" << std::endl;
 		std::cout << "Command: ";
 
 		char input;
@@ -155,6 +191,10 @@ int main() {
 		case 'M':
 		case 'm':
 			modifyCommand(board, boardHistory, bestRegion);
+			break;
+		case 'I':
+		case 'i':
+			initCommand(board, boardHistory, bestRegion);
 			break;
 		case 'U':
 		case 'u':
