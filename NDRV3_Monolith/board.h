@@ -34,8 +34,8 @@ public:
 
 	void initialize(const std::vector<int>& input);
 
-	bool breakRegion(const Region_t& region);
-	bool breakRegionAt(int row, int col);
+	bool breakRegion(const Region_t& region, bool output = false);
+	bool breakRegionAt(int row, int col, bool output = false);
 	bool modify(int row, int col, Tile_t newType);
 
 	std::vector<Region_t> getAllRegions() const;

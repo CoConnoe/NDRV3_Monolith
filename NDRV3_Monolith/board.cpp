@@ -326,7 +326,7 @@ int Board_t::getIndex(int row, int col) const
 	return row * m_cols + col;
 }
 
-bool Board_t::breakRegion(const Region_t& region)
+bool Board_t::breakRegion(const Region_t& region, bool output)
 {
 	if (region.m_coords.size() == 0 || !(region.m_type == TILE_WHITE || region.m_type == TILE_PINK || region.m_type == TILE_ORANGE || region.m_type == TILE_BLUE)) {
 		std::cout << "ERROR: Invalid region!" << std::endl;
@@ -341,6 +341,9 @@ bool Board_t::breakRegion(const Region_t& region)
 
 		// clear selected region
 		for (std::set<int>::iterator it = region.m_coords.begin(); it != region.m_coords.end(); ++it) {
+			if (output)
+				std::cout << "(" << getRow(*it) << "," << getCol(*it) << ") BREAK" << std::endl;
+
 			m_array[*it] = TILE_EMPTY;
 		}
 
@@ -571,10 +574,10 @@ bool Board_t::isCompletelyRevealed(const Object_t & object, int originIndex) con
 	return rval;
 }
 
-bool Board_t::breakRegionAt(int row, int col)
+bool Board_t::breakRegionAt(int row, int col, bool output)
 {
 	Region_t region = getRegionAt(row, col);
-	return breakRegion(region);
+	return breakRegion(region, output);
 }
 
 bool Board_t::modify(int row, int col, Tile_t newType)

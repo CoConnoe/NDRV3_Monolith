@@ -4,22 +4,21 @@
 #include <stack>
 
 void breakCommand(Board_t& board, std::stack<Board_t>& boardHistory, Region_t& bestRegion) {
-	std::cout << "Row: ";
+	//std::cout << "Row: ";
 	int row;
 	std::cin >> row;
 	
-	std::cout << "Col: ";
+	//std::cout << "Col: ";
 	int col;
 	std::cin >> col;
 
 	boardHistory.push(board);
 
-	if (!board.breakRegionAt(row, col)) {
+	if (!board.breakRegionAt(row, col, true)) {
 		boardHistory.pop();
 	}
-	else {
-		bestRegion = Region_t();
-	}
+
+	bestRegion = Region_t();
 
 	std::cout << std::endl;
 }
@@ -31,7 +30,7 @@ void calcCommand(Board_t& board, std::stack<Board_t>& boardHistory, Region_t& be
 void breakRecommendedCommaned(Board_t& board, std::stack<Board_t>& boardHistory, Region_t& bestRegion) {
 	boardHistory.push(board);
 
-	if (!board.breakRegion(bestRegion)) {
+	if (!board.breakRegion(bestRegion, true)) {
 		boardHistory.pop();
 	}
 
@@ -41,16 +40,16 @@ void breakRecommendedCommaned(Board_t& board, std::stack<Board_t>& boardHistory,
 }
 
 void modifyCommand(Board_t& board, std::stack<Board_t>& boardHistory, Region_t& bestRegion) {
-	std::cout << "Row: ";
+	//std::cout << "Row: ";
 	int row;
 	std::cin >> row;
 
-	std::cout << "Col: ";
+	//std::cout << "Col: ";
 	int col;
 	std::cin >> col;
 
-	std::cout << "0-Empty 1-White 2-Pink 3-Orange 4-Blue M-Monokub F-Fishie" << std::endl;
-	std::cout << "Value: ";
+	//std::cout << "0-Empty 1-White 2-Pink 3-Orange 4-Blue M-Monokub F-Fishie" << std::endl;
+	//std::cout << "Value: ";
 	char val;
 	std::cin >> val;
 
@@ -93,9 +92,8 @@ void modifyCommand(Board_t& board, std::stack<Board_t>& boardHistory, Region_t& 
 		if (!board.modify(row, col, valtype)) {
 			boardHistory.pop();
 		}
-		else {
-			bestRegion = Region_t();
-		}
+			
+		bestRegion = Region_t();
 	}
 
 	std::cout << std::endl;
