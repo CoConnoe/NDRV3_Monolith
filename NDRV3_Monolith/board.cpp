@@ -8,11 +8,15 @@
 
 //#define __DEBUG
 
-//const int MAX_TRIALS = 1; // TODO: increase as CPU permits
+//const int MAX_TRIALS = 10; // TODO: increase as CPU permits
 //const int MAX_DEPTH = 3; // TDOO: increase as CPU permits
 
 const int MAX_TRIALS = 100; // TODO: increase as CPU permits
-const int MAX_DEPTH = 20; // TDOO: increase as CPU permits
+const int MAX_DEPTH = 30; // TDOO: increase as CPU permits
+
+// assuming Mean difficulty
+const int TOTAL_MONOKUBS = 2;
+const int TOTAL_FISHIES = 7;
 
 Board_t::Board_t(int maxrows, int maxcols)
 	: m_rows(maxrows), m_cols(maxcols)
@@ -120,6 +124,9 @@ Region_t Board_t::calculateBestMove() const
 	static std::default_random_engine generator(seed);
 
 	std::vector<Region_t> regionlist = getAllRegions();
+	std::vector<ObjectLoc_t> possibleHiddenMonokubs = possibleHiddenMonokubLocs();
+	std::vector<ObjectLoc_t> possibleHiddenFishies = possibleHiddenFishieLocs();
+
 	for (int trialnum = 0; trialnum < MAX_TRIALS; ++trialnum) {
 #ifdef __DEBUG
 		std::cout << "DEBUG TRIAL:" << trialnum << std::endl;
@@ -132,17 +139,29 @@ Region_t Board_t::calculateBestMove() const
 		for (int r = 0; r < regionlist.size(); ++r) {
 			if (regionlist[r].m_type == TILE_MONOKUB) {
 				std::vector<ObjectLoc_t> possibleLoc = possibleMonokubLocs(regionlist[r]);
-				std::uniform_int_distribution<int> distribution(0, possibleLoc.size() - 1);
-				trialMonokubLocs.push_back(possibleLoc[distribution(generator)]);
+				if (!possibleLoc.empty()) {
+					std::uniform_int_distribution<int> distribution(0, possibleLoc.size() - 1);
+					trialMonokubLocs.push_back(possibleLoc[distribution(generator)]);
+				}
 			}
 			else if (regionlist[r].m_type == TILE_FISHIE) {
 				std::vector<ObjectLoc_t> possibleLoc = possibleFishieLocs(regionlist[r]);
-				std::uniform_int_distribution<int> distribution(0, possibleLoc.size() - 1);
-				trialFishieLocs.push_back(possibleLoc[distribution(generator)]);
+				if (!possibleLoc.empty()) {
+					std::uniform_int_distribution<int> distribution(0, possibleLoc.size() - 1);
+					trialFishieLocs.push_back(possibleLoc[distribution(generator)]);
+				}
 			}
 		}
 
-		// TODO: Add fully hidden monokubs / fishies to fill out the board
+		// TODO: Ensure no objects overlap
+		while (trialMonokubLocs.size() < TOTAL_MONOKUBS) {
+			std::uniform_int_distribution<int> distribution(0, possibleHiddenMonokubs.size() - 1);
+			trialMonokubLocs.push_back(possibleHiddenMonokubs[distribution(generator)]);
+		}
+		while (trialFishieLocs.size() < TOTAL_FISHIES) {
+			std::uniform_int_distribution<int> distribution(0, possibleHiddenFishies.size() - 1);
+			trialFishieLocs.push_back(possibleHiddenFishies[distribution(generator)]);
+		}
 
 		// examine each possible move
 		for (int r = 0; r < regionlist.size(); ++r) {
@@ -429,10 +448,22 @@ std::vector<ObjectLoc_t> Board_t::possibleMonokubLocs(const Region_t & region) c
 	return possibleObjectLocs(region, allMonokubs);
 }
 
+std::vector<ObjectLoc_t> Board_t::possibleHiddenMonokubLocs() const
+{
+	std::vector<Object_t> allMonokubs = getAllMonokubs();
+	return possibleHiddenObjectLocs(allMonokubs);
+}
+
 std::vector<ObjectLoc_t> Board_t::possibleFishieLocs(const Region_t & region) const
 {
 	std::vector<Object_t> allFishies = getAllFishies();
 	return possibleObjectLocs(region, allFishies);
+}
+
+std::vector<ObjectLoc_t> Board_t::possibleHiddenFishieLocs() const
+{
+	std::vector<Object_t> allFishies = getAllFishies();
+	return possibleHiddenObjectLocs(allFishies);
 }
 
 std::vector<ObjectLoc_t> Board_t::possibleObjectLocs(const Region_t & region, const std::vector<Object_t>& allObjects) const
@@ -462,13 +493,32 @@ std::vector<ObjectLoc_t> Board_t::possibleObjectLocs(const Region_t & region, co
 		// take the object and "wiggle" it around the exposed region 
 		for (int row = top - allObjects[obj].m_rows + height; row <= top; ++row) {
 			for (int col = left - allObjects[obj].m_cols + width; col <= left; ++col) {
-				if (couldBeHiddenHere(allObjects[obj], getIndex(row, col))) {
+				if (couldBeHiddenHere(allObjects[obj], getIndex(row, col), false)) {
 					ObjectLoc_t objectloc;
 					objectloc.m_origin = getIndex(row, col);
 					objectloc.m_config_id = obj;
 
 					rval.push_back(objectloc);
 				}
+			}
+		}
+	}
+
+	return rval;
+}
+
+std::vector<ObjectLoc_t> Board_t::possibleHiddenObjectLocs(const std::vector<Object_t>& allObjects) const
+{
+	std::vector<ObjectLoc_t> rval;
+
+	for (int obj = 0; obj < allObjects.size(); ++obj) {
+		for (int index = 0; index < m_array.size(); ++index) {
+			if (couldBeHiddenHere(allObjects[obj], index, true)) {
+				ObjectLoc_t objectloc;
+				objectloc.m_origin = index;
+				objectloc.m_config_id = obj;
+
+				rval.push_back(objectloc);
 			}
 		}
 	}
@@ -518,7 +568,7 @@ void Board_t::applyObjectLocations(const std::vector<ObjectLoc_t>& monokubLocs, 
 }
 
 // TODO: refactor couldBeHiddenHere and isCompletelyRevealed
-bool Board_t::couldBeHiddenHere(const Object_t & object, int originIndex) const
+bool Board_t::couldBeHiddenHere(const Object_t & object, int originIndex, bool fullyHidden) const
 {
 	Tile_t type;
 	if (object.m_type == MONOKUB) {
@@ -538,7 +588,7 @@ bool Board_t::couldBeHiddenHere(const Object_t & object, int originIndex) const
 		for (int col = originCol; col < originCol + object.m_cols; ++col, ++objectIndex) {
 			if (object.m_poslist[objectIndex]) {
 				Tile_t peekTile = peek(row, col);
-				if (peekTile != TILE_WHITE && peekTile != TILE_PINK && peekTile != TILE_ORANGE && peekTile != TILE_BLUE && peekTile != type)
+				if (peekTile != TILE_WHITE && peekTile != TILE_PINK && peekTile != TILE_ORANGE && peekTile != TILE_BLUE && (fullyHidden || peekTile != type))
 					rval = false;
 			}
 		}

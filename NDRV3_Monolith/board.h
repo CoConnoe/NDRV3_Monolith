@@ -63,10 +63,11 @@ protected:
 	std::vector<ObjectLoc_t> possibleHiddenFishieLocs() const;
 
 	std::vector<ObjectLoc_t> possibleObjectLocs(const Region_t& region, const std::vector<Object_t>& allObjects) const;
+	std::vector<ObjectLoc_t> possibleHiddenObjectLocs(const std::vector<Object_t>& allObjects) const;
 
 	void applyObjectLocations(const std::vector<ObjectLoc_t>& monokubLocs, const std::vector<ObjectLoc_t>& fishieLocs);
 
-	bool couldBeHiddenHere(const Object_t& object, int originIndex) const;
+	bool couldBeHiddenHere(const Object_t& object, int originIndex, bool fullyHidden) const;
 	bool isCompletelyRevealed(const Object_t& object, int originIndex) const;
 
 private:

@@ -46,10 +46,13 @@
     <Text Include="notes.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="test.txt">
+    <Text Include="todo.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="todo.txt">
+    <Text Include="test1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="test2.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

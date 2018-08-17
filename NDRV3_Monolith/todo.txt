@@ -1,3 +1,10 @@
 - test: https://www.youtube.com/watch?v=ImVLv3YEd7Y
 - determine if placement of fully hidden objects is helpful or not
 - mess around with the MAX_DEPTH MAX_TRIALS variables a bit in release mode with a fullsize grid
+- run profiler
+- Tile type that is a color but is user-predicted to be M or F
+
+MM
+MMM
+MM
+MM
