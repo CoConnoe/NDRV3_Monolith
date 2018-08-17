@@ -41,6 +41,15 @@ std::vector<Object_t> getAllMonokubs() {
 	g_monokubs.push_back(createObject(MONOKUB, 4, 4, { 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1 }));
 	g_monokubs.push_back(createObject(MONOKUB, 4, 4, { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 }));
 
+	// MM
+	// MMM
+	// MM
+	// MM ...and rotated
+	g_monokubs.push_back(createObject(MONOKUB, 4, 3, { 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0 }));
+	g_monokubs.push_back(createObject(MONOKUB, 3, 4, { 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0 }));
+	g_monokubs.push_back(createObject(MONOKUB, 4, 3, { 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1 }));
+	g_monokubs.push_back(createObject(MONOKUB, 3, 4, { 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1 }));
+
 	return g_monokubs;
 }
 
